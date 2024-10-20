@@ -9,15 +9,15 @@ import           Control.Applicative (Alternative (..))
 -- >>> let add = \n -> \m -> Parser (\x -> Result x (n+m))
 
 data ParseError
-  = UnexpectedEof
-  | ExpectedEof Input
-  | UnexpectedChar Char
-  | UnexpectedString String
+  = UnexpectedEof -- hit end of file when we expected more input
+  | ExpectedEof Input -- should have successfully parsed everything but there’s more!
+  | UnexpectedChar Char -- unexpected character
+  | UnexpectedString String -- unexpected string
   deriving (Eq, Show)
 
 data ParseResult a
   = Error ParseError
-  | Result Input a
+  | Result Input a -- Input is the remaining input, a is the parsed value
   deriving (Eq)
 
 type Input = String
@@ -82,7 +82,7 @@ instance Applicative Parser where
 
   -- or
   (<*>) :: Parser (a -> b) -> Parser a -> Parser b
-  (<*>) p q = p >>= (<$> q)
+  (<*>) p q = p >>= (<$> q) -- extracts the function from the first parser and then uses the <$> operator to apply this function to the result of the second parser
 
 -- |
 --

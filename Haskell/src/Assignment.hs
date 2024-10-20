@@ -1,6 +1,7 @@
 module Assignment (markdownParser, convertADTHTML) where
 
 
+import           Control.Applicative (Alternative (..))
 import           Data.Time.Clock  (getCurrentTime)
 import           Data.Time.Format (defaultTimeLocale, formatTime)
 import           Instances        (Parser (..))

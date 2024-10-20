@@ -26,6 +26,8 @@ failed = Parser . const . Error
 
 -- | Produces a parser that always fails with 'UnexpectedChar' using the given
 -- character.
+--
+-- >>> parse (unexpectedCharParser 'x') "abc"
 unexpectedCharParser :: Char -> Parser a
 unexpectedCharParser = Parser . const . Error . UnexpectedChar
 
@@ -319,3 +321,148 @@ commaTok = charTok ','
 -- True
 stringTok :: String -> Parser String
 stringTok = tok . string
+
+-------------------------------------------------------------------------------
+underscoreTok :: Parser Char
+underscoreTok = charTok '_'
+
+doubleAsteriskTok :: Parser String
+doubleAsteriskTok = stringTok "**"
+
+doubleTildeTok :: Parser String
+doubleTildeTok = stringTok "~~"
+
+openBracketTok :: Parser Char
+openBracketTok = charTok '['
+
+closeBracketTok :: Parser Char
+closeBracketTok = charTok ']'
+
+openParenthesisTok :: Parser Char
+openParenthesisTok = charTok '('
+
+closeParenthesisTok :: Parser Char
+closeParenthesisTok = charTok ')'
+
+backtickTok :: Parser Char
+backtickTok = charTok '`'
+
+openBracket :: Parser Char
+openBracket = is '['
+
+closeBracket :: Parser Char
+closeBracket = is ']'
+
+caret :: Parser Char
+caret = is '^'
+
+positiveInt :: Parser Int
+positiveInt = do
+  n <- int
+  if n > 0
+    then return n
+    else Parser $ const (Error $ UnexpectedChar '-')
+
+exclamationMark :: Parser Char
+exclamationMark = is '!'
+
+doubleQuoteTok :: Parser Char
+doubleQuoteTok = charTok '"'
+
+colonTok :: Parser Char
+colonTok = charTok ':'
+
+hash :: Parser Char
+hash = is '#'
+
+twoHashes :: Parser String
+twoHashes = string "##"
+
+threeHashes :: Parser String
+threeHashes = string "###"
+
+fourHashes :: Parser String
+fourHashes = string "####"
+
+fiveHashes :: Parser String
+fiveHashes = string "#####"
+
+sixHashes :: Parser String
+sixHashes = string "######"
+
+newline :: Parser Char
+newline = is '\n'
+
+equal :: Parser Char
+equal = is '='
+
+equals :: Parser String
+equals = many equal
+
+-- | Return a parser that produces 2 or more equal characters (consuming
+-- until the first non-equal character) but fails if:
+--
+--   * the input is empty; or
+--
+--   * the first produced character is not an equal character.
+equals2 :: Parser String
+equals2 = (++) <$> string "==" <*> equals
+-- or equals2 = liftA2 (++) (string "==") equals
+
+dash :: Parser Char
+dash = is '-'
+
+dashes :: Parser String
+dashes = many dash
+
+-- | Return a parser that produces 2 or more dashes (consuming
+-- until the first non-dash character) but fails if:
+--
+--   * the input is empty; or
+--
+--   * the first produced character is not a dash.
+dashes2 :: Parser String
+dashes2 = (++) <$> string "--" <*> dashes
+-- or dashes2 = liftA2 (++) (string "--") dashes
+
+-- | Return a parser that produces 3 or more dashes (consuming
+-- until the first non-dash character) but fails if:
+--
+--   * the input is empty; or
+--
+--   * the first produced character is not a dash.
+dashes3 :: Parser String
+dashes3 = (++) <$> string "---" <*> dashes
+-- or dashes3 = liftA2 (++) (string "---") dashes
+
+greaterThan :: Parser Char
+greaterThan = is '>'
+
+threeBackticks :: Parser String
+threeBackticks = string "```"
+
+one :: Parser Char
+one = is '1'
+
+fullStop :: Parser Char
+fullStop = is '.'
+
+fourSpaces :: Parser String
+fourSpaces = string "    "
+
+pipe :: Parser Char
+pipe = is '|'
+
+-- | Parse a sequence of at least one values with a separator.
+--
+sepBy1 :: Parser a -> Parser b -> Parser [a]
+sepBy1 p sep = p <:> many (sep *> p)
+  where
+    -- (Optional) Join two parsers into a list
+    (<:>) :: Parser a -> Parser [a] -> Parser [a]
+    (<:>) = liftA2 (:)
+
+-- | Parse a sequence of values with a separator.
+--
+sepBy :: Parser a -> Parser b -> Parser [a]
+sepBy p sep = sepBy1 p sep <|> pure []
