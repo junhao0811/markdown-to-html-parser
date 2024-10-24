@@ -4,7 +4,7 @@ module Main (main) where
 
 -- import Assignment (markdownParser)
 
-import           Assignment              (convertADTHTML, markdownParser)
+import           Assignment              (convertADTHTML, markdownParser, getTime)
 import           Data.Aeson              (object, (.=))
 import           Data.Aeson.Key          (fromString)
 import           Data.Text.Lazy          (Text, pack, unpack)
@@ -21,6 +21,14 @@ jsonResponse :: Show a => [(String, a)] -> ActionM ()
 jsonResponse pairs =
   json $ object [fromString key .= ((pack $ show value) :: Text) | (key, value) <- pairs]
 
+-- Function to save the HTML to a file with the current timestamp
+saveHTMLToFile :: String -> IO ()
+saveHTMLToFile html = do
+  time <- getTime
+  -- Construct the file path using the current timestamp
+  let filePath = "html/" ++ time ++ ".html"
+  -- Write the HTML content to the file
+  writeFile filePath html
 
 main :: IO ()
 main = scotty 3000 $ do
@@ -35,3 +43,7 @@ main = scotty 3000 $ do
 
     -- Respond with the converted HTML as JSON
     jsonResponse [("html", converted_html)]
+
+-- Handling a POST request to save HTML
+handleSaveHTMLRequest :: String -> IO ()
+handleSaveHTMLRequest = saveHTMLToFile

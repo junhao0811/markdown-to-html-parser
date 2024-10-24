@@ -1,22 +1,17 @@
 diff --git a/examples/expected_output/free_text.html b/examples/output/free_text.html
-index d178a3ba..dfaca94c 100644
+index d178a3b..7b6d1aa 100644
 --- a/examples/expected_output/free_text.html
 +++ b/examples/output/free_text.html
-@@ -1,15 +1 @@
--<!DOCTYPE html>
--<html lang="en">
--
--<head>
--    <meta charset="UTF-8">
--    <title>Test</title>
--</head>
--
--<body>
+@@ -7,9 +7,7 @@
+ </head>
+ 
+ <body>
 -    <p>Here is some <strong>markdown</strong></p>
 -    <p>More lines here</p>
 -    <p>Text</p>
--</body>
--
++    <p>Here is some markdownMore lines here</p>    <p>Text</p>
+ </body>
+ 
 -</html>
-+IMPLEMENT_THIS
++</html>
 \ No newline at end of file

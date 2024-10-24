@@ -1,5 +1,5 @@
 import { fromEvent, merge } from "rxjs";
-import { map, mergeScan, first } from "rxjs/operators";
+import { map, mergeScan, first, switchMap, filter } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 import { type Observable } from "rxjs";
 import { State } from "./types";
@@ -109,6 +109,51 @@ function main() {
                 }
             }
         });
+        
+    // Handle Save Button Clicks
+    const saveButton = document.getElementById("saveButton");
+
+    if (saveButton) {
+        // Create an Observable for save button clicks
+        const saveButtonClick$ = fromEvent(saveButton, 'click').pipe(
+            // Map the click event to the inner HTML of the preview element
+            map(() => document.getElementById("preview")?.innerHTML),
+            // Filter out null or undefined HTML content
+            filter((htmlContent): htmlContent is string => !!htmlContent),
+            // Switch to a fetch Observable to save the HTML content
+            switchMap((htmlContent) => fetch("/save", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ html: htmlContent })
+            }))
+        );
+
+        // Subscribe to the save button click Observable
+        saveButtonClick$.subscribe((response) => {
+            if (response.ok) {
+                alert("HTML saved successfully!");
+            } else {
+                alert("Failed to save HTML.");
+            }
+        });
+    }
+
+    // Handle Title Input Changes
+    const titleInput = document.getElementById("titleInput");
+
+    if (titleInput) {
+        // Create an Observable for title input changes
+        const titleInput$ = fromEvent(titleInput, 'input').pipe(
+            // Map the input event to the new title value
+            map(event => (event.target as HTMLInputElement).value)
+        );
+
+        // Subscribe to the title input Observable
+        titleInput$.subscribe(newTitle => {
+            // Update the document title with the new title value
+            document.title = newTitle;
+        });
+    }
 }
 if (typeof window !== "undefined") {
     window.onload = function () {

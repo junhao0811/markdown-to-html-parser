@@ -1,17 +1,11 @@
 diff --git a/examples/expected_output/tables.html b/examples/output/tables.html
-index 70fde47e..dfaca94c 100644
+index 70fde47..ccfc7bc 100644
 --- a/examples/expected_output/tables.html
 +++ b/examples/output/tables.html
-@@ -1,38 +1 @@
--<!DOCTYPE html>
--<html lang="en">
--
--<head>
--    <meta charset="UTF-8">
--    <title>Test</title>
--</head>
--
--<body>
+@@ -7,32 +7,7 @@
+ </head>
+ 
+ <body>
 -    <table>
 -        <thead>
 -            <tr>
@@ -38,8 +32,9 @@ index 70fde47e..dfaca94c 100644
 -            </tr>
 -        </tbody>
 -    </table>
--</body>
--
++    <p>| Tables        | Are           | Cool  |</p>    <p>| ------------- | ------------- | ----- |</p>    <p>| here          | is            | data  |</p>    <p>| here          | is            | data  |</p>    <p>| here | is also | bolded data|</p>
+ </body>
+ 
 -</html>
-+IMPLEMENT_THIS
++</html>
 \ No newline at end of file

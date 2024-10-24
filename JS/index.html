@@ -18,16 +18,19 @@
             <section id="input-section" style="flex: 1; padding-right: 10px;">
                 <h2>Enter Markdown:</h2>
                 <textarea id="markdown-input" placeholder="Enter your Markdown here..." style="width: 100%;"></textarea>
+                <label for="titleInput">Change Page Title:</label>
+                <input id="titleInput" type="text" placeholder="Enter new title here">
             </section>
             <section id="output-section" style="flex: 1; padding-left: 10px;">
                 <h2>HTML Output:</h2>
                 <div id="html-output"></div>
                 <label><input type="checkbox" name="checkbox" checked>Render HTML</label>
+                <button id="saveButton">Save HTML</button>
             </section>
         </div>
     </main>
     <footer>
-        <p>Developed by Your Name</p>
+        <p>Developed by Chong Jun Hao</p>
     </footer>
     <script src="./src/main.ts" type="module"></script>
 </body>
