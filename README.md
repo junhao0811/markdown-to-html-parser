@@ -1,37 +1,69 @@
+# 📝 Markdown → HTML Converter (Haskell + TypeScript)
+
+A live Markdown editor that converts Markdown into clean, pretty-printed HTML as you type. The conversion engine is a **Markdown parser written from scratch in Haskell with parser combinators**, served to a reactive **TypeScript + RxJS** front end.
+
 ---
-title: Assignment 2 - Markdown2HTML
-author: FIT2102 Programming Paradigms
-margin: 1inch
+
+## ✨ Features
+
+**Supported Markdown**
+- Headings (`#` and underline style), **bold**, *italic*, ~~strikethrough~~ and `inline code`
+- Links, images with captions, footnotes and footnote references
+- Blockquotes and fenced code blocks with a language tag
+- Ordered lists with nested sub-lists
+- Tables
+
+**Editor**
+- **Live preview**: HTML updates on every keystroke
+- Syntax highlighting for code (JavaScript, Python, Haskell)
+- Save the generated HTML to a timestamped file
+
 ---
 
-# Assignment 2: Markdown2HTML
-
-Please do not change the names of the functions defined in the Assignment.hs file. You may (and are highly encouraged) to implement your parsers **alongside** these pre-defined functions.
-
-## Running the Code
+## 🏗️ How it works
 
 ```
-$ stack test
+┌─────────────────────────┐   POST /api/convertMD   ┌──────────────────────────────┐
+│  Browser editor         │ ──────────────────────▶ │  Haskell server (Scotty)     │
+│  TypeScript + RxJS      │                         │  Markdown ─▶ ADT ─▶ HTML     │
+│  input$ → state → view  │ ◀────────────────────── │  parser combinators          │
+└─────────────────────────┘        HTML (JSON)      └──────────────────────────────┘
 ```
 
-This will generate the HTML files using the sample input markdown files, by running your code for each exercise.
+- **Parsing**: small, composable parsers (`parseBold`, `parseLink`, `parseTable`…) are combined into a full `markdownParser` that turns raw text into an **algebraic data type (ADT)** describing the document
+- **Rendering**: the ADT is pretty-printed into correctly indented HTML
+- **Front end**: user input is an RxJS stream folded into immutable state, keeping side effects at the edges
 
-All example markdown files are stored within `examples/input` and the output of your parser will be saved in `examples/output`.
+| Path | Contents |
+|---|---|
+| `Haskell/src/Parser.hs` | Parser-combinator building blocks |
+| `Haskell/src/Assignment.hs` | Markdown grammar, ADT and HTML pretty-printer |
+| `Haskell/app/Main.hs` | Scotty web server |
+| `Haskell/examples/` | Sample Markdown inputs with expected HTML output |
+| `JS/src/` | Reactive TypeScript editor |
 
+---
 
-## Running the Interactive Page
+## 🚀 Run it
 
-In the Haskell folder run:
+**Requires** [Stack](https://docs.haskellstack.org/) and Node.js.
 
+```bash
+# 1. Start the Haskell server (port 3000)
+cd Haskell
+stack run
+
+# 2. In another terminal, start the editor
+cd JS
+npm install
+npm run dev
 ```
-$ stack run
+
+Run the parser tests against the example files:
+```bash
+cd Haskell
+stack test
 ```
 
-In a separate terminal, in the javascript folder run:
-
-```
-$ npm i
-$ npm run dev
-```
-
-You can type markdown in to the LHS of the webpage and inspect the converted HTML.
+## 🛠️ Tech
+Haskell · parser combinators · Scotty · TypeScript · RxJS · highlight.js · Vite
