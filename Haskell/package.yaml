@@ -3,7 +3,6 @@ version: 0.1.0.0
 github: "githubuser/intro"
 license: BSD3
 author: "Rhys Newbury, Lauren Yim"
-maintainer: ""
 copyright: "2024 Rhys Newbury"
 
 # Metadata used when publishing your package

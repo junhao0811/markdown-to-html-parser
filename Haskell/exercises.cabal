@@ -10,7 +10,6 @@ description:    Please see the README on GitHub at <https://github.com/githubuse
 homepage:       https://github.com/githubuser/intro#readme
 bug-reports:    https://github.com/githubuser/intro/issues
 author:         Rhys Newbury, Lauren Yim
-maintainer:     
 copyright:      2024 Rhys Newbury
 license:        BSD3
 build-type:     Simple
