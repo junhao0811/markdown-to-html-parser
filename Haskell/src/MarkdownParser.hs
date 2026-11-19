@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-name-shadowing #-}
-module Assignment (markdownParser, convertADTHTML, getTime) where
+module MarkdownParser (markdownParser, convertADTHTML, getTime) where
 
 import Control.Applicative (Alternative (..), optional)
 import Data.Time.Clock (getCurrentTime)

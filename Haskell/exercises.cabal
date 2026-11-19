@@ -21,7 +21,7 @@ source-repository head
 
 library
   exposed-modules:
-      Assignment
+      MarkdownParser
       Instances
       Parser
   other-modules:

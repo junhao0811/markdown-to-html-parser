@@ -1,4 +1,4 @@
-import           Assignment           (convertADTHTML, markdownParser)
+import           MarkdownParser           (convertADTHTML, markdownParser)
 import           Control.Exception    (IOException, try)
 import           Control.Monad        (mapM_, (>>), (>>=))
 import           Data.List            (isPrefixOf)

@@ -2,9 +2,9 @@
 
 module Main (main) where
 
--- import Assignment (markdownParser)
+-- import MarkdownParser (markdownParser)
 
-import           Assignment              (convertADTHTML, markdownParser, getTime)
+import           MarkdownParser              (convertADTHTML, markdownParser, getTime)
 import           Data.Aeson              (object, (.=))
 import           Data.Aeson.Key          (fromString)
 import           Data.Text.Lazy          (Text, pack, unpack)

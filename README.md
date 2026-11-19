@@ -37,7 +37,7 @@ A live Markdown editor that converts Markdown into clean, pretty-printed HTML as
 | Path | Contents |
 |---|---|
 | `Haskell/src/Parser.hs` | Parser-combinator building blocks |
-| `Haskell/src/Assignment.hs` | Markdown grammar, ADT and HTML pretty-printer |
+| `Haskell/src/MarkdownParser.hs` | Markdown grammar, ADT and HTML pretty-printer |
 | `Haskell/app/Main.hs` | Scotty web server |
 | `Haskell/examples/` | Sample Markdown inputs with expected HTML output |
 | `JS/src/` | Reactive TypeScript editor |
